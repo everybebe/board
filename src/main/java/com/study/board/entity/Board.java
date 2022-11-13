@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public class Board {

@@ -3,7 +3,6 @@ package com.study.board.controller;
 import com.study.board.entity.Board;
 import com.study.board.repository.BoardRepository;
 import com.study.board.service.BoardService;
-import net.bytebuddy.implementation.bytecode.ShiftRight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -102,14 +100,17 @@ public class BoardController {
         return "boardmodify";
     }
 
+    //게시판 수정 화면
     @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Integer id, Board board, MultipartFile file) throws Exception{
 
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
+        boardTemp.setFilepath(board.getFilepath());
 
         boardService.write(boardTemp, file);
+
 
         return "redirect:/board/list";
     }

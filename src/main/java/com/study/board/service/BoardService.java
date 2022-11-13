@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
@@ -19,20 +23,26 @@ public class BoardService {
 
 
     //글 작성 처리
+
     public void write(Board board, MultipartFile file) throws Exception{
 
-        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
 
-        UUID uuid = UUID.randomUUID();
+        if (file != null) {
+            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
 
-        File saveFile = new File(projectPath, fileName);
+            String fileName = uuid + "_" + file.getOriginalFilename();
 
-        file.transferTo(saveFile);
+            File saveFile = new File(projectPath, fileName);
 
-        board.setFilename(fileName);
-        board.setFilepath("/files/" + fileName);
+            file.transferTo(saveFile);
+
+            board.setFilename(fileName);
+            board.setFilepath("/files/" + fileName);
+        } else {
+            board.setFilepath(board.getFilepath());
+        }
 
         boardRepository.save(board);
 
