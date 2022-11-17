@@ -107,7 +107,7 @@ public class BoardController {
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
-        boardTemp.setFilepath(board.getFilepath());
+//        boardTemp.setFilepath(board.getFilepath());
 
         boardService.write(boardTemp, file);
 

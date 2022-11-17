@@ -24,27 +24,27 @@ public class BoardService {
 
     //글 작성 처리
 
-    public void write(Board board, MultipartFile file) throws Exception{
+    public void write(Board board, MultipartFile file) throws Exception {
 
-
+        //만약 파일이 null 이 아니라면
         if (file != null) {
+            //저장 경로 지정
             String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
-
+            //랜덤으로 파일 이름 만들어줌
             UUID uuid = UUID.randomUUID();
-
             String fileName = uuid + "_" + file.getOriginalFilename();
-
+            //파일을 넣을 껍데기 생성
             File saveFile = new File(projectPath, fileName);
 
             file.transferTo(saveFile);
 
-            board.setFilename(fileName);
-            board.setFilepath("/files/" + fileName);
-        } else {
-            board.setFilepath(board.getFilepath());
-        }
+            //DB에 값 넣기
+            board.setFilename(fileName); //저장된 파일 이름
+            board.setFilepath("/files/" + fileName); //저장된 파일 경로
 
-        boardRepository.save(board);
+//            board.setFilepath(board.getFilepath());
+        }
+            boardRepository.save(board);
 
     }
 
