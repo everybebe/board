@@ -51,7 +51,7 @@ public class UserController {
 
             return "redirect:/board/list";
         } else {
-            model.addAttribute("error", "아이디나 비밀번호가 틀렸습니다. ");
+            model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
             model.addAttribute("errorMessage", "/login");
 
             return "error";
