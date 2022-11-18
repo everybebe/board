@@ -20,37 +20,40 @@ public class UserController {
     //회원가입
     @GetMapping("/join")
     public String joinForm() {
+
         return "join";
     }
 
     //회원가입 확인 후 화면
     @PostMapping("/join")
     public String join(UserVO userVO) {
+
         userService.joinUser(userVO);
+
         return "redirect:/board/list";
     }
 
     //로그인
     @GetMapping("/login")
     public String loginForm() {
+
         return "login";
     }
 
     @PostMapping("/login")
     public String login(@ModelAttribute UserVO userVO, HttpSession session,
-                        @RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "exception", required = false) String exception,
                         Model model) {
 
         UserVO loginResult = userService.login(userVO);
 
         if (loginResult != null) {
             session.setAttribute("loginId", loginResult.getUserId());
+
             return "redirect:/board/list";
         } else {
-//            model.addAttribute("error", error);
-//            model.addAttribute("exception", exception);
-            model.addAttribute("error", "아이디나 비밀번호");
+            model.addAttribute("error", "아이디나 비밀번호가 틀렸습니다. ");
+            model.addAttribute("errorMessage", "/login");
+
             return "error";
         }
     }
