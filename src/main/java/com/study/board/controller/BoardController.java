@@ -38,7 +38,6 @@ public class BoardController {
         boardService.write(board, file);
 
         model.addAttribute("message", "글 작성이 완료되었습니다");
-
         model.addAttribute("searchUrl", "/board/list");
 
         return "message";
@@ -96,7 +95,6 @@ public class BoardController {
 
         model.addAttribute("board", boardService.boardView(id));
 
-
         return "boardmodify";
     }
 
@@ -110,7 +108,6 @@ public class BoardController {
 //        boardTemp.setFilepath(board.getFilepath());
 
         boardService.write(boardTemp, file);
-
 
         return "redirect:/board/list";
     }
