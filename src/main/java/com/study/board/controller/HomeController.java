@@ -25,7 +25,7 @@ public class HomeController {
         Optional<UserVO> loginMember = userRepository.findByUserId(String.valueOf(memberId));
 
         if (loginMember == null) {
-            return "home";
+            return "login";
         }
 
         model.addAttribute("member", loginMember);
