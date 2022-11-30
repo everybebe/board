@@ -58,5 +58,10 @@ public class UserService{
     }
 
 
+    public UserVO login(String userId, String password) {
 
+        return userRepository.findByUserId(userId)
+                .filter(m -> m.getPassword().equals(password))
+                .orElse(null);
+    }
 }
