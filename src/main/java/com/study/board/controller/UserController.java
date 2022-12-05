@@ -1,6 +1,7 @@
 package com.study.board.controller;
 
 import com.study.board.entity.UserVO;
+import com.study.board.repository.UserRepository;
 import com.study.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
 
     //회원가입
     @GetMapping("/join")
@@ -47,7 +49,7 @@ public class UserController {
         UserVO loginResult = userService.login(userVO);
 
         if (loginResult != null) {
-            session.setAttribute("loginId", loginResult.getUserId());
+            session.setAttribute("loginId", loginResult);
 
             return "redirect:/board/list";
         } else {
