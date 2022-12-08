@@ -11,12 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserRepository userRepository;
 
 
     //회원가입
@@ -42,23 +46,59 @@ public class UserController {
         return "login";
     }
 
+//    @PostMapping("/login")
+//    public String login(@ModelAttribute UserVO userVO, HttpSession session,
+//                        Model model) {
+//
+//        UserVO loginResult = userService.login(userVO);
+//
+//        if (loginResult != null) {
+//            session.setAttribute("loginId", loginResult);
+//
+//            return "redirect:/board/list";
+//        } else {
+//            model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
+//            model.addAttribute("errorMessage", "/login");
+//
+//            return "error";
+//        }
+//    }
+
+
     @PostMapping("/login")
-    public String login(@ModelAttribute UserVO userVO, HttpSession session,
-                        Model model) {
+    public String login(String userId, String password, HttpSession session, Model model) {
 
-        UserVO loginResult = userService.login(userVO);
+        Optional<UserVO> userVO = userRepository.findByUserId(userId);
 
-        if (loginResult != null) {
-            session.setAttribute("loginId", loginResult);
+        if ( userVO == null ) {
+            System.out.println("로그인 실패");
 
-            return "redirect:/board/list";
-        } else {
             model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
             model.addAttribute("errorMessage", "/login");
 
             return "error";
         }
+
+        if ( !password.equals(userVO.get().getPassword())) {
+            System.out.println("로그인 실패");
+
+            model.addAttribute("error", "아이디 또는 비밀번호를 잘못 입력했습니다.");
+            model.addAttribute("errorMessage", "/login");
+
+            return "error";
+        }
+
+            session.setAttribute("sessionId", userVO);
+            System.out.println("로그인 성공");
+
+        return "redirect:/board/list";
+
     }
 
-
+    //로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("sessionId");
+        return "redirect:/board/list";
+    }
 }
