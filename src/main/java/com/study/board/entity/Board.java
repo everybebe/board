@@ -37,7 +37,15 @@ public class Board {
     private String filepath;
     
     private int count;
-//
+
+    public Board(Board board) {
+        this.id = board.getId();
+        this.title = board.getTitle();
+        this.name = board.getName();
+        this.date = board.getDate();
+        this.count = board.getCount();
+    }
+
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;

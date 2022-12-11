@@ -64,7 +64,6 @@ public class BoardController {
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-
         return "boardlist";
     }
 
@@ -105,7 +104,6 @@ public class BoardController {
         Board boardTemp = boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
-//        boardTemp.setFilepath(board.getFilepath());
 
         boardService.write(boardTemp, file);
 

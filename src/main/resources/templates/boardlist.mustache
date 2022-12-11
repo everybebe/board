@@ -117,16 +117,29 @@ a{
         </thead>
 
         <tbody>
-        <tr th:each="board : ${list}">
-            <td th:text="${board.id}">1</td>
-            <td>
-                <a th:text="${board.title}" th:href="@{/board/view/(id=${board.id})}"></a>
-            </td>
-            <td th:text="${board.name}">작성자</td>
-            <td th:text="${#temporals.format(board.date, 'yyyy-MM-dd')}">작성날짜</td>
-            <td th:text="${board.count}">조회수</td>
-        </tr>
+        {{#board}}
+            <tr>
+                <td>{{id}}</td>
+                <td><a href="/board/view/{{id}}">{{title}}</a></td>
+                <td>{{name}}</td>
+                <td>{{count}}</td>
+            </tr>
+        {{/board}}
         </tbody>
+
+
+<!--        <tbody>-->
+<!--        <tr th:each="board : ${list}">-->
+<!--            <td th:text="${board.id}">1</td>-->
+<!--            <td>-->
+<!--                <a th:text="${board.title}" th:href="@{/board/view/(id=${board.id})}"></a>-->
+<!--            </td>-->
+<!--            <td th:text="${board.name}">작성자</td>-->
+<!--            <td th:text="${#temporals.format(board.date, 'yyyy-MM-dd')}">작성날짜</td>-->
+<!--            <td th:text="${board.count}">조회수</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+
     </table>
 
     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
@@ -144,13 +157,12 @@ a{
 <!--    <div class="write-button">-->
 <!--        <form th:action="@{/board/write}" method="get">-->
 <!--            <button type="submit" class="btn btn-secondary cell-r">글쓰기</button>-->
-            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
-                        <a href="/board/write" role="button" class="btn btn-primary">글쓰기</a>
-                    </div>
+                    <div class="col-md-12">
+                        <a href="/board/write" role="button" class="btn btn-primary cell-r">글쓰기</a>
                 </div>
 <!--        </form>-->
+
     </div>
 
 </div>
